@@ -20,6 +20,16 @@ M.treesitter = {
   compilers = { "clang" },
 }
 
+M.cmp = {
+  sources = {
+    { name = "luasnip" },
+    { name = "nvim_lsp" },
+    { name = "buffer" },
+    { name = "nvim_lua" },
+    { name = "path" },
+  },
+}
+
 M.mason = {
   ensure_installed = {
     -- lua stuff

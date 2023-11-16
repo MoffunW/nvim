@@ -42,3 +42,18 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
+require("lspconfig").emmet_ls.setup {
+  capabilities = capabilities,
+  filetypes = { "html", "javascriptreact", "typescriptreact", "vue" },
+  init_options = {
+    html = {
+      options = {
+        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        ["bem.enabled"] = false,
+        ["bem.element"] = "__",
+        ["bem.modifier"] = "--",
+      },
+    },
+  },
+}
