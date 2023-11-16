@@ -21,6 +21,27 @@ local plugins = {
       require "custom.configs.lspconfig"
     end, -- Override to setup mason-lspconfig
   },
+  {
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x",
+    dependencies = {
+      -- LSP Support
+      { "neovim/nvim-lspconfig" }, -- Required
+      { -- Optional
+        "williamboman/mason.nvim",
+        opts = overrides.mason,
+        build = function()
+          pcall(vim.cmd, "MasonUpdate")
+        end,
+      },
+      { "williamboman/mason-lspconfig.nvim" }, -- Optional
+
+      -- Autocompletion
+      { "hrsh7th/nvim-cmp" }, -- Required
+      { "hrsh7th/cmp-nvim-lsp" }, -- Required
+      { "L3MON4D3/LuaSnip" }, -- Required
+    },
+  },
 
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -46,6 +67,7 @@ local plugins = {
   -- Install a plugin
   {
     "max397574/better-escape.nvim",
+    lazy = true,
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
@@ -153,6 +175,7 @@ local plugins = {
   -- git stuff
   {
     "NeogitOrg/neogit",
+    lazy = true,
     cmd = "Neogit",
     dependencies = {
       "nvim-lua/plenary.nvim", -- required
@@ -183,6 +206,7 @@ local plugins = {
   },
   {
     "numtostr/BufOnly.nvim",
+    lazy = true,
     cmd = "BufOnly",
   },
 
