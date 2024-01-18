@@ -72,8 +72,8 @@ M.general = {
     ["K"] = { "5k", "up 5 lines", opts = options },
 
     -- Move lines
-    ["<A-j>"] = { "<cmd>m+<CR>", "Move lines down", opts = options },
-    ["<A-k>"] = { "<cmd>m-2<CR>", "Move lines up", opts = options },
+    -- ["<A-j>"] = { "<cmd>m+<CR>", "Move lines down", opts = options },
+    -- ["<A-k>"] = { "<cmd>m-2<CR>", "Move lines up", opts = options },
 
     -- Indent
     [">"] = { ">1>", "indent right", opts = options },
@@ -97,8 +97,8 @@ M.general = {
     ["K"] = { "5k", "up 5 lines", opts = options },
 
     -- Move lines
-    ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move lines down", opts = options },
-    ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Move lines up", opts = options },
+    -- ["<A-j>"] = { ":m '>+1<CR>gv=gv", "Move lines down", opts = options },
+    -- ["<A-k>"] = { ":m '<-2<CR>gv=gv", "Move lines up", opts = options },
     -- Indent
     [">"] = { ">gv", "indent", opts = options },
     -- Search
@@ -200,6 +200,7 @@ M.telescope = {
     ["<leader>ft"] = { "<cmd> Telescope terms<CR>", "Pick hidden term" },
     ["<leader>fj"] = { "<cmd> Telescope jumplist<CR>", "Find jumplist" },
     ["<leader>fu"] = { "<cmd> Telescope resume<CR>", "Reopen previous window" },
+    ["<leader>ftd"] = { "<cmd> TodoTelescope<CR>", "Find todo" },
 
     -- git
     ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "Git commits" },
@@ -263,6 +264,12 @@ M.lspconfig = {
     },
   },
 }
+
+-- gomove.nvim
+map("n", "<A-h>", "<Plug>GoNSMLeft", {})
+map("n", "<A-j>", "<Plug>GoNSMDown", {})
+map("n", "<A-k>", "<Plug>GoNSMUp", {})
+map("n", "<A-l>", "<Plug>GoNSMRight", {})
 
 -- more keybinds!
 

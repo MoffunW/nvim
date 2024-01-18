@@ -23,6 +23,7 @@ M.treesitter = {
 M.cmp = {
   sources = {
     { name = "luasnip" },
+    { name = "codeium" },
     { name = "nvim_lsp" },
     { name = "buffer" },
     { name = "nvim_lua" },
