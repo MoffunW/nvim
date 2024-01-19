@@ -4,20 +4,30 @@ M.treesitter = {
   ensure_installed = {
     "vim",
     "lua",
-    "html",
-    "css",
+    "vue",
     "javascript",
     "typescript",
-    "tsx",
+    "scss",
+    "css",
+    "html",
     "c",
     "markdown",
     "markdown_inline",
   },
   indent = {
     enable = true,
-    -- disable = {
-    --   "python"
-    -- },
+  },
+  compilers = { "clang" },
+}
+
+M.cmp = {
+  sources = {
+    { name = "luasnip" },
+    { name = "codeium" },
+    { name = "nvim_lsp" },
+    { name = "buffer" },
+    { name = "nvim_lua" },
+    { name = "path" },
   },
 }
 
@@ -31,14 +41,33 @@ M.mason = {
     "css-lsp",
     "html-lsp",
     "typescript-language-server",
-    "deno",
-    "prettier",
+    "vue-language-server",
+    "emmet-ls",
+    "prettierd",
 
     -- c/cpp stuff
     "clangd",
     "clang-format",
   },
 }
+
+-- M.telescope = {
+--   file_ignore_patterns = { "node_modules", "*-lock.json", "*.lock", "yarn.lock" },
+--   extensions_list = { "themes", "terms", "fzf", "persisted" },
+--   extensions = {
+--     fzf = {
+--       fuzzy = true,
+--       override_generic_sorter = true,
+--       override_file_sorter = true,
+--       case_mode = "smart_case",
+--     },
+--     persisted = {
+--       layout_config = { width = 0.55, height = 0.55 },
+--     },
+--   },
+-- }
+--
+--
 
 -- git support in nvimtree
 M.nvimtree = {

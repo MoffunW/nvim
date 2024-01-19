@@ -10,7 +10,12 @@ M.ui = {
 
   hl_override = highlights.override,
   hl_add = highlights.add,
-  transparency = true
+  transparency = true,
+  statusline = {
+    theme = "default",
+    separator_style = "arrow",
+    overriden_modules = nil,
+  },
 }
 
 M.plugins = "custom.plugins"
