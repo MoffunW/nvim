@@ -92,88 +92,12 @@ local plugins = {
     lazy = false,
 
     opts = function()
-      return require "custom.configs.persisted"
+      return require("custom.configs.persisted").options
     end,
     config = function(_, opts)
       require("persisted").setup(opts)
     end,
-    init = function()
-      local group = vim.api.nvim_create_augroup("PersistedHooks", {})
-
-      -- Close all plugin owned buffers before saving a session.
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedSavePre",
-        group = group,
-        callback = function()
-          -- Detect if window is owned by plugin by checking buftype.
-          local current_buffer = vim.api.nvim_get_current_buf()
-          for _, win in ipairs(vim.fn.getwininfo()) do
-            local buftype = vim.bo[win.bufnr].buftype
-            if buftype ~= "" and buftype ~= "help" then
-              -- Delete plugin owned window buffers.
-              if win.bufnr == current_buffer then
-                -- Jump to previous window if current window is not a real file
-                vim.cmd.wincmd "p"
-              end
-              vim.api.nvim_buf_delete(win.bufnr, {})
-            end
-          end
-          pcall(vim.cmd, "bw NvimTree")
-        end,
-      })
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedSavePost",
-        group = group,
-        callback = function()
-          require("persisted").stop()
-        end,
-      })
-
-      -- Before switching to a different session using Telescope, save and stop
-      -- current session to avoid previous session to be overwritten.
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedTelescopeLoadPre",
-        group = group,
-        callback = function()
-          vim.api.nvim_command "%bd"
-          require("persisted").stop()
-        end,
-      })
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedLoadPre",
-        group = group,
-        callback = function()
-          vim.api.nvim_command "%bd"
-          for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-            if vim.api.nvim_win_get_config(win).zindex then
-              vim.api.nvim_win_close(win, false)
-            end
-          end
-        end,
-      })
-
-      --[[ vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedTelescopeLoadPre",
-        group = group,
-        callback = function(session)
-          -- vim.api.nvim_command "%bw"
-        end,
-      }) ]]
-
-      -- After switching to a different session using Telescope, start it so it
-      -- will be auto-saved.
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PersistedTelescopeLoadPost",
-        group = group,
-        callback = function(session)
-          require("persisted").start()
-          pcall(vim.cmd, "bw NvimTree")
-
-          print("Started session " .. session.data.name)
-        end,
-      })
-    end,
+    init = require("custom.configs.persisted").init(),
   },
 
   -- git stuff
@@ -228,7 +152,6 @@ local plugins = {
     lazy = true,
     config = function()
       require("neoscroll").setup {
-
         -- All these keys will be mapped to their corresponding default scrolling animation
         mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
         hide_cursor = true, -- Hide cursor while scrolling
@@ -259,7 +182,7 @@ local plugins = {
   },
   {
     "booperlv/nvim-gomove",
-    -- lazy = true,
+    lazy = true,
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("gomove").setup {
@@ -273,6 +196,26 @@ local plugins = {
       }
     end,
     -- init = require("core.utils").load_mappings "hop",
+  },
+  {
+    "Wansmer/treesj",
+    lazy = true,
+    keys = { "<leader>m", "<leader>j", "<leader>s" },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesj").setup {}
+    end,
+  },
+  {
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    config = function()
+      require("peek").setup()
+      -- refer to `configuration to change defaults`
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
   },
 }
 
