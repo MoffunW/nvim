@@ -44,6 +44,7 @@ for _, lsp in ipairs(servers) do
 end
 
 require("lspconfig").emmet_ls.setup {
+  enabled = vim.g.emmet_enabled,
   capabilities = capabilities,
   filetypes = { "html", "javascriptreact", "typescriptreact", "vue" },
   init_options = {
